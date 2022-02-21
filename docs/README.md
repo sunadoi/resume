@@ -29,7 +29,7 @@
   <img alt="Redux" src="https://img.shields.io/badge/-Redux-45b8d8?style=flat-square&logo=redux&logoColor=white" />
   <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" />
   <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" />
-  <img alt="Apollo" src="https://img.shields.io/badge/-Apollo%20GraphQL-311C87?style=flat-square&logo=apollo-graphql&logoColor=white" />
+  <img alt="Apollo" src="https://img.shields.io/badge/-Apollo-311C87?style=flat-square&logo=apollo-graphql&logoColor=white" />
   <img alt="GraphQL" src="https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white" />
   <img alt="MySQL" src="https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white" />
   <img alt="Docker" src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white" />
@@ -62,6 +62,7 @@
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### Firebase preview channelの設定
 機能を実装したときにGit操作ができないPdMに仕様を画面上で確認してもらいたい、細かいUI上の修正を簡単に画面上で確認したいということが度々ありました。  
@@ -96,11 +97,10 @@ ref: https://github.com/Hypercontext/linkifyjs/issues/351
 firestoreのrulesをテストする際にjestを使用していたのですが、watchモードでの変更の反映に20秒程度かかるという課題がありました。非常に開発効率が悪かったためちょうど開発され始めたvitestという非常に高速で動作するテスティングライブラリを使用することにしました。結果、watchモードでの変更の反映が1秒程度となり開発効率が非常に向上しました。  
 まだproduction readyではないものの、問題が起きたらjestに戻すという合意形成のもと、全てのテストをvitestで動作するようにリプレイスしました。結果的にテストを書くモチベーションも上がり、非常に良い開発体験を得られたと思っています。
 
----
-
+</div>
 </details>
 
-#### 既存プロダクトの新機能開発
+#### **既存プロダクトの新機能開発**
 
 |key|value|
 |---|---|
@@ -116,6 +116,7 @@ firestoreのrulesをテストする際にjestを使用していたのですが�
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### 設計
 カスタマーの登録ステータスや売却物件の情報など扱うべきデータ量がいくつか増えることになったので、それらをFirestore上でどう設計するかにとても悩みました。  
@@ -143,6 +144,7 @@ https://www.sunapro.com/tuple-type-check/
 
 また、いいものを作りたいという思いが強いので、プロダクトのあるべき姿を考えた上でたとえ工数が増えるようなものであっても積極的に提案するように心がけており、特に実装中にUI/UXが悪いと感じたものに関しては改善案を出しながら実装しています。
 
+</div>
 </details>
 
 ### 株式会社ストランザ (2020/04 ~ 2021/04)
@@ -159,6 +161,7 @@ Goではクリーンアーキテクチャを意識して実装をしていまし
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### 実装した内容
 リプレイス後の挙動は同じでありがならも、パフォーマンスやDB負荷を下げられる部分は対応するという方針だったため、主にSQL部分に関しては同じ結果になるようにしながらもパフォーマンスをあげられるような工夫が必要でした。  
@@ -181,6 +184,7 @@ truthyとfalsyの判定の違いなどに気をつけつつ、どういうレス
 また、クリーンアーキテクチャに沿った設計にするために、ファイル構成をどうするかだったりどこのレイヤーに記述を書くべきか、共通化する関数はどこにするべきかを決めるのに非常に苦労しました。  
 この辺はクリーンアーキテクチャの本やブログ記事などを読み漁り、どうすればいいかをチームで話し合いながら進めた結果、依存の方向性を一方向にするというクリーンアーキテクチャの原則に沿うようにすることができました。
 
+</div>
 </details>
 
 #### Reactによる検索画面の追加
@@ -195,6 +199,7 @@ Reactで検索画面の機能追加を行いました。
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### 苦労した点
 TypeScriptをを使った開発とReduxを使わない開発が初めてだったこと、GraphQLを使っていたのでキャッチアップがとても大変でした。  
@@ -207,6 +212,7 @@ TypeScriptをを使った開発とReduxを使わない開発が初めてだっ�
 TypeScriptの型定義が曖昧になっていた部分があったためきちんと型定義するようにリファクタリングしました。  
 tsconfigの設定を見直したり、eslintやCIの設定も見直したことで、チームの開発体験向上に貢献できたと思います。
 
+</div>
 </details>
 
 #### マイクロサービスにおける認証機構の構築
@@ -222,6 +228,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### 担当した業務
 フロントエンドはほぼ1人でReact / TypeScriptで実装を行いました。  
@@ -244,6 +251,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 
 先に設計をきちんと固めてからプロトタイプを作成するという方針で行い、実際に複数サービス間でログイン情報を共有した状態を作ることができました。
 
+</div>
 </details>
 
 ### 副業
@@ -261,6 +269,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### アプリの概要
 未経験からのエンジニア転職を目指しているコミュニティ生が自分の情報を記載したり、誰かの情報を見たりすることができる名簿アプリです。
@@ -301,6 +310,7 @@ CIではTypeScriptのタイプチェック、prettierによるフォーマット
 今後しばらく使用していくアプリなのでDB設計をきちんと行う必要があると考え、そのために本を4冊ほど読みました。  
 データの整合性と検索・更新のパフォーマンスを加味して、レコード数がそれほどまでには多くならないとの推測から、できるだけ整合性を優先させた設計になるようにしました。
 
+</div>
 </details>
 
 #### Three.jsを用いた3Dアニメーションの描画
@@ -317,6 +327,7 @@ three.jsを使用した3Dアニメーションの描画機能の実装を担当�
 
 <details>
 <summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
 
 ### CIの構築
 プロジェクトにジョインしてコードを見ていると、TypeScriptの型定義が曖昧なままのコードがあったり、バグの危険性があるコードをいくつか見つけました。  
@@ -329,4 +340,9 @@ huskyとCIでは型、format、lintのチェックを行い、CIではそれに�
 バックエンドで描画に必要なデータを全て計算してレスポンスするとかなり重くなってしまったので、バックエンドではそれらの計算を行わず、かつ加工しやすい形でクライアントにレスポンスする必要がありました。そのため、バックエンドの人とどういうレスポンスが必要かを相談し、結果的にデータ加工のしやすさとレスポンス速度を両立させた形になるように設計しました。  
 これによりデータを加工する処理は少し複雑になってしまったので、類似の実装で困っていた他のメンバーのためにもコードを共通化できる形で書き共有しました。
 
+</div>
 </details>
+
+---
+
+## 業務外活動

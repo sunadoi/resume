@@ -1,8 +1,17 @@
 {
   "name": "resume",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "sunadoi",
-  "license": "MIT",
-  "private": true
+  "author": "sunadoi <y.sunadoi@gmail.com>",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sunadoi/resume.git"
+  },
+  "scripts": {
+    "lint": "textlint docs/README.md"
+  },
+  "devDependencies": {
+    "textlint": "^12.1.0",
+    "textlint-rule-preset-ja-technical-writing": "^7.0.0"
+  }
 }

@@ -1,5 +1,15 @@
 {
   "rules": {
-    "preset-ja-technical-writing": true
+    "preset-ja-technical-writing": {
+      "sentence-length": {
+        "max": 120,
+        "severity": "warning"
+      },
+      "no-doubled-joshi": {
+        "min_interval": 1,
+        "severity": "warning"
+      },
+      "max-kanji-continuous-len": false
+    }
   }
 }

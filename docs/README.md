@@ -100,7 +100,7 @@ firestoreのrulesをテストする際にjestを使用していたのですが�
 </div>
 </details>
 
-#### **既存プロダクトの新機能開発**
+#### 既存プロダクトの新機能開発
 
 |key|value|
 |---|---|
@@ -346,3 +346,16 @@ huskyとCIでは型、format、lintのチェックを行い、CIではそれに�
 ---
 
 ## 業務外活動
+
+### 技術ブログ
+日々の業務で詰まったことや、気になったトピックを深掘りしてまとめたりしています。
+
+https://www.sunapro.com/
+
+### OSS貢献
+今後積極的にPR作成していこうと思っています。
+
+- issue
+  - https://github.com/Hypercontext/linkifyjs/issues/351
+- PR
+  - https://github.com/faker-js/faker/pull/241

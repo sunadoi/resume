@@ -50,9 +50,7 @@
 |使用技術|<img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" /> <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" /> <img alt="Renovate" src="https://img.shields.io/badge/-Renvate-1A1F6C?style=flat-square&logo=Renovatebot&logoColor=white" />|
 
 
-担当タスク以外にもやりたいことがあって認められればできるという環境だったので、いくつかの提案をして実行しました。
-
-具体的には次のことをやりました。
+担当タスク以外にもやりたいことがあって認められればできるという環境だったので、いくつかの提案をして実行しました。具体的には次のことをやりました。
 
 - Firebase preview channelの設定
 - storybookのデプロイ環境の構築

@@ -1,5 +1,5 @@
 ---
-title: Update your resume【{{ date | date('YYYY/MM/DD') }}】
+title: 職務経歴書の更新【{{ date | date('YYYY/MM/DD') }}】
 labels: enhancement
 assignees: sunadoi
 ---

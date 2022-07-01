@@ -35,6 +35,7 @@
   <img alt="Docker" src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white" />
   <img alt="GitHub Ations" src="https://img.shields.io/badge/-GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white" />
   <img alt="Serverless" src="https://img.shields.io/badge/-Serverless Framework-FD5750?style=flat-square&logo=Serverless&logoColor=white" />
+  <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" />
   <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />
   <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" />
 </p>
@@ -91,12 +92,71 @@ DependabotやRenovateなどが代表的なツールであり、これらは定�
 これによりライブラリが新しい状態を保つことができるようになっただけでなく、ライブラリの変更をきちんと追いかけるようになったのは良い副産物でした。  
 こちらの内容はブログにまとめました。  
 https://www.sunapro.com/renovate/  
+運用方法の決め方や実際に半年間運用した振り返りをzennにまとめました。  
+https://zenn.dev/sunadoi/articles/889219ab865583  
 また、ライブラリのアップデートによってテストが落ちたことがあり、ライブラリ側のデグレーションらしき挙動だったのでissueを立てて修正してもらいました。  
 ref: https://github.com/Hypercontext/linkifyjs/issues/351
 
 ### Vitestの導入
-firestoreのrulesをテストする際にjestを使用していたのですが、watchモードでの変更の反映に20秒程度かかるという課題がありました。非常に開発効率が悪かったためちょうど開発され始めたvitestという非常に高速で動作するテスティングライブラリを使用することにしました。結果、watchモードでの変更の反映が1秒程度となり開発効率が非常に向上しました。  
-まだproduction readyではないものの、問題が起きたらjestに戻すという合意形成のもと、全てのテストをvitestで動作するようにリプレイスしました。結果的にテストを書くモチベーションも上がり、非常に良い開発体験を得られたと思っています。
+firestoreのrulesをテストする際にjestを使用していたのですが、watchモードでの変更の反映に20秒程度かかるという課題がありました。非常に開発効率が悪かったため高速で動作するテスティングライブラリであるvitestを使用することにしました。結果、watchモードでの変更の反映が1秒程度となり開発効率が非常に向上しました。  
+結果的にテストを書くモチベーションも上がり、非常に良い開発体験を得られたと思っています。
+
+</div>
+</details>
+
+#### Firebase emulatorsによるローカル環境の構築とテストの実装
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|要件定義 / 設計 / コーディング / テスト / 保守・運用
+|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Vitest" src="https://img.shields.io/badge/-Vitest-739B1B?style=flat-square&logo=Vitest&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" />|
+
+当時、プロジェクトにローカル環境が整備されておらず、ローカルで動作確認をするためにもstaging環境のFirebaseに接続しなければならないという状況でした。
+
+開発者の人数が少ないこともあってなんとか開発できてはいましたが、作業内容が被ると意図しない挙動になってしまったり、動作確認するために毎回デプロイが必要になったりと開発効率に課題を抱えていました。
+
+この課題を解決するために、Firebaseのemulatorsを使用してローカル環境を構築しました。  
+さらに、構築したemulators環境を利用してそれまでほとんど書かれていなかったテストを実装しました。
+
+以下に詳細を記述します。
+
+<details>
+<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
+
+### emulators環境の構築
+emulatorsのhosting機能は使用せず、firestoreやauthをemulators環境で立ち上げ、フロントエンドはviteで起動させた状態でemulatorsに接続する設計にすることで、快適な動作環境を構築できました。  
+なお、emulatorsの起動とviteサーバーの起動、接続を1つのコマンドで行うためにProcfileを使用しています。
+
+emulatorsのfirestoreやauthデータはファイルに永続化するようにしました。  
+外部サービスとしてalgoliaを使っているため、algolia内のデータとemulatorsのfirestoreデータが一致しないという問題が生じましたが、emulatorsでのみ使用するalgolia環境を用意し、環境変数によって接続先を切り替えることで対応しました。
+
+### テストの実装
+既存のコンポーネントや関数はfirestoreとの結合度が高かったため、それまでテストが十分に行われていませんでしたが、emulatorsを導入したことでテストできる環境が整いました。  
+
+テストを行うにあたって、まずテスト戦略をチームで話し合いました。  
+結果として、以下のような戦略でテストを実装することになりました。
+
+- ロジックのユニットテストは網羅的に行う
+- コンポーネントのユニットテストは行わず、Chromaticを用いたスナップショットテストに一任する
+- 複数コンポーネントを組み合わせたintegration testは必要な場面で行う
+- E2Eテストは人による動作確認が大変な場面に絞って行う
+
+実際にテストを書いていく中で変更はある前提ですが、ひとまず上記のように設定しました。  
+まずはロジックのユニットテストを導入しました。  
+
+ほとんどの関数がfirestoreへ接続するため、これをemulators環境に接続して行うようにしました。  
+ここで考えなければならないのが、createやupdateしたデータがテスト間で影響し合わないようにする方法でした。  
+ベストな方法はテスト環境ごとにemulators環境を別々で用意して、それぞれ接続するようにすることです。  
+環境を隔離することで他のテストへの影響をなくせる上に、並列でテストを実行できるためテスト実行時間の短縮も望めます。
+
+ただし、これはemulatorsの環境を別で用意する分だけportを確保する必要がありそれぞれのテストで別々のportに接続する必要があるため実装が非常に複雑になりそうでした。  
+したがって、各テストは直列で実行しそれぞれのテストごとにfirestoreやauthのデータをリセットする方針としました。  
+数十のテストを書きましたが全く問題なく書けており、vitestのおかげか当初心配していた実行時間の長期化も全く気になっていません。
+
+実装の詳細はブログに記述しました。  
+https://www.sunapro.com/vitest-firebase-emulators/
 
 </div>
 </details>
@@ -305,6 +365,65 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 - 特許出願
 
 ### 副業
+#### RailsからGoへのリプレイス
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割| 要件定義 / 設計 / コーディング / テスト / 保守・運用
+|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" /> <img alt="Ruby on Rails" src="https://img.shields.io/badge/-Rails-CC0000?style=flat-square&logo=Ruby on Rails&logoColor=white" /> <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+
+APIモードで動いているRailsアプリケーションの一部をGoにリプレイスするプロジェクトを担当しています。  
+Goのコードが何も書かれていない状態から、移行の方針や使用する技術を選定しました。  
+副業として業務委託での参画であり、社内にGoに詳しい人がほとんどいなかったため、READMEやNotionに技術の使い方や技術選定の経緯を詳しく書くよう心がけました。
+
+以下に詳細を記述します。
+
+<details>
+<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
+
+### OpenAPIの運用
+RailsからGoにリプレイスするにあたって、まずエンドポイントごとのリクエストとレスポンスの仕様を整理するためにOpenAPIを使用することにしました。  
+railsのspecから自動生成するツールなどもありましたが、内容を変更した際に反映されないなど運用面での不安があったので直接定義を書くことにしました。  
+ただ、yamlを直接編集するのはあまり効率的な作業ではないため、stoplightというGUI上で編集したものがyamlとして吐き出されるツールを設定して使うようにしました。  
+
+### アーキテクチャとディレクトリ構成
+アーキテクチャの設計は概ねクリーンアーキテクチャに沿うような形にしました。  
+クリーンアーキテクチャにした理由は、ビジネスロジックをきちんと分離してテストが書けるような状態を作りたかったからです。  
+DDDのようなドメインごとにディレクトリ構成を分けるアーキテクチャも考えましたが、移行元のRailsはMVCモデルであり技術的な関心ごとでレイヤーが分かれているアーキテクチャのため、クリーンアーキテクチャの方が移行しやすいというのも理由の1つでした。
+
+クリーンアーキテクチャを踏襲した形にしていますが、実装と運用の都合上改変しているところもあります。  
+具体的には、以下のようにしています。  
+
+- presenters層は削除
+- controllersからinteractorsを呼び出す際はinterfaceを挟まない
+
+presenters層を削除するとcontrollers層が少しfatになってしまいますが、その代わりに記述がシンプルになるメリットの方が大きいと判断しました。  
+全体のテストの方針としてエンドポイント毎のE2Eテストを行う方針にしたので、controllers層の単体テストは不要と判断したため、interactorsはinterfaceを挟まずに呼び出すようにしました。  
+
+#### ファイルの一括生成コマンドの実装
+新しいエンドポイントを実装する際に、必要なボイラープレートの記述が多いという課題がありました。  
+この課題を解決すべく、text/templateパッケージを使用して、ファイル名を入力すると必要な記述が書かれたファイル群を一括生成できるようなコマンドを作成しました。  
+
+#### DB構造体の自動生成
+ORMは人気のあるgormを使用することにしました。  
+gormを使用する際にはDBスキーマに相当する構造体をコードベースで定義する必要がありますが、それを自前で定義するのは面倒でもありタイポの危険性もありました。  
+調査した結果、gormの開発元にgenというリポジトリがあり、実際のDBスキーマから自動的に構造体を生成するようなバイナリを提供していました。  
+
+DBのマイグレーションはしばらくはRails側で行います。  
+実際のDBスキーマから構造体を自動生成できるので実態と乖離することもなく手動で定義する手間も省ける手法を確立できました。
+
+### エラーハンドリングと構造化ログ
+エラーハンドリングではログでどこでどのようなエラーが起こったか追えるようにxerrorsを使用して、スタックトレースを出すようにしています。  
+呼び出し先でエラーが起こった場合は、呼び出し元でエラー内容をラップした形で返すことでどの関数の呼び出しでエラーが起こったか追えるようにしています。
+
+ログはzapを使用してリクエストの内容を構造化ログとして出力しています。  
+エラー時には上述のエラーのスタックトレースも一緒に構造化ログとして組み込むことで、リクエスト内容とエラーの内容を同時に見られるようにしました。
+
+</div>
+</details>
+
 #### 名簿アプリの作成
 
 
@@ -400,6 +519,21 @@ huskyとCIでは型、format、lintのチェックを行い、CIではそれに�
 日々の業務で詰まったことや、気になったトピックを深掘りしてまとめたりしています。
 
 https://www.sunapro.com/
+
+### 技術ブログの作成
+技術ブログを作成しました。  
+https://www.sunablog.dev/
+
+使用した技術は以下です。
+
+- React
+- Remix
+- Mantine (UIライブラリ)
+- TailwindCSS
+- microCMS
+
+最近ではブログを作成する際はNext.jsを使うのが一般的ですが、Remixを使用して何かを作ってみたかったので試してみました。  
+正直ブログが題材ということもあり、あまりRemixの良さを活かせなかったという反省点はありますが、キャッシュについて低レイヤーでコントロールできるため、自分で色々試す中でキャッシュについての理解を深められました。
 
 ### OSS貢献
 今後積極的にPR作成していこうと思っています。

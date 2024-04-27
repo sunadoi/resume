@@ -25,6 +25,8 @@
 <p>
   <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
   <img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=Next.js&logoColor=white" />
+  <img alt="NestJS" src="https://img.shields.io/badge/-NestJS-E0234E?style=flat-square&logo=NestJS&logoColor=white" />
+  <img alt="Turborepo" src="https://img.shields.io/badge/-Turborepo-EF4444?style=flat-square&logo=Turborepo&logoColor=white" />
   <img alt="Redux" src="https://img.shields.io/badge/-Redux-45b8d8?style=flat-square&logo=redux&logoColor=white" />
   <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" />
   <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" />
@@ -64,7 +66,7 @@
 
 ## 職務経歴詳細
 
-### 株式会社TERASS (2021/05 ~ 現在)
+### 株式会社TERASS (2021/05 ~ 2022/10)
 #### 開発環境の整備
 
 |key|value|
@@ -82,7 +84,7 @@
 - Vitestの導入
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### Firebase preview channelの設定
@@ -142,7 +144,7 @@ firestoreのrulesをテストする際にjestを使用していたのですが�
 以下に詳細を記述します。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### emulators環境の構築
@@ -198,7 +200,7 @@ https://www.sunapro.com/vitest-firebase-emulators/
 以下、苦労した点やバリューを発揮した点、気をつけている点などを記載します。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### 設計
@@ -246,7 +248,7 @@ https://www.sunapro.com/tuple-type-check/
 以下、実装時に気をつけたことや苦労したことなどを記載します。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### 型安全性
@@ -282,7 +284,7 @@ PHPで動いている既存のアプリのバックエンドをGoのAPIとして
 Goではクリーンアーキテクチャを意識して実装をしていました。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### 実装した内容
@@ -320,7 +322,7 @@ truthyとfalsyの判定の違いなどに気をつけつつ、どういうレス
 Reactで検索画面の機能追加を行いました。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### 苦労した点
@@ -349,7 +351,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 複数サービス間でログイン状態を共有するためにはどうすればいいかなどを考慮しつつも、セキュアな構成にするため、設計の段階から議論を重ねてアーキテクチャを設計しました。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### 担当した業務
@@ -400,7 +402,7 @@ Goのコードが何も書かれていない状態から、移行の方針や使
 以下に詳細を記述します。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### OpenAPIの運用
@@ -457,7 +459,7 @@ DBのマイグレーションはしばらくはRails側で行います。
 フロントエンド、バックエンド、インフラの設計から実装、運用まで全てやっており、現在400名以上のユーザーに使用されています。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### アプリの概要
@@ -515,7 +517,7 @@ CIではTypeScriptのタイプチェック、prettierによるフォーマット
 three.jsを使用した3Dアニメーションの描画機能の実装を担当した他、開発環境の整備として各種設定やCIの構築なども行いました。
 
 <details>
-<summary style="cursor: pointer">👉  プロジェクト詳細</summary>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
 <div style="background-color: #f7f7f7; padding: 24px">
 
 ### CIの構築
@@ -540,28 +542,12 @@ huskyとCIでは型、format、lintのチェックを行い、CIではそれに�
 
 https://www.sunapro.com/
 
-### 技術ブログの作成
-技術ブログを作成しました。  
-https://www.sunablog.dev/
-
-使用した技術は以下です。
-
-- React
-- Remix
-- Mantine (UIライブラリ)
-- TailwindCSS
-- microCMS
-
-最近ではブログを作成する際はNext.jsを使うのが一般的ですが、Remixを使用して何かを作ってみたかったので試してみました。  
-正直ブログが題材ということもあり、あまりRemixの良さを活かせなかったという反省点はありますが、キャッシュについて低レイヤーでコントロールできるため、自分で色々試す中でキャッシュについての理解を深められました。
-
 ### OSS貢献
-今後積極的にPR作成していこうと思っています。
 
-- issue
-  - https://github.com/Hypercontext/linkifyjs/issues/351
-- PR
-  - https://github.com/faker-js/faker/pull/241
+- https://github.com/faker-js/faker/pull/241
+- https://github.com/faker-js/faker/pull/1405
+- https://github.com/faker-js/faker/pull/1419
+- https://github.com/mantinedev/mantine/pull/5032
 
 ---
 

@@ -45,6 +45,11 @@
 
 ## 目次
 - 職務経歴書詳細
+  - 株式会社Cyber Agent
+    - 管理画面の実装 (フロントエンド、バックエンド)
+    - キャッシュ機構の変更とパフォーマンスチューニング
+    - リアーキテクトとテスト拡充
+    - AWSコスト削減
   - 株式会社TERASS
     - 開発環境の整備
     - Firebase emulatorsによるローカル環境の構築とテストの実装
@@ -65,6 +70,157 @@
 - 資格・業績
 
 ## 職務経歴詳細
+### 株式会社Cyber Agent (2022/12 ~ 現在)
+#### 管理画面の実装　(フロントエンド、バックエンド)
+
+|key|value|
+|---|---|
+|プロジェクト規模|2人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=Next.js&logoColor=white" /> <img alt="NestJS" src="https://img.shields.io/badge/-NestJS-E0234E?style=flat-square&logo=NestJS&logoColor=white" /> <img alt="Turborepo" src="https://img.shields.io/badge/-Turborepo-EF4444?style=flat-square&logo=Turborepo&logoColor=white" /> <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+
+**40ページ程度ある管理画面の実装のほとんどを任せていただき、2ヶ月でフロントエンドおよびバックエンドの実装が完了しました。**
+
+デザインがなんとなく決まっている状態からの開発でしたが、ビジネスサイドの人から使い方のヒアリングをしつつ細かいデザインは自分で考えて実装しました。  
+設計段階から担当し、使用するライブラリやディレクトリ構成なども自分で決めて実装しました。  
+実装完了後に脆弱性診断をしたところ、大きな問題はなく予定通りにリリースできました。
+
+
+<details>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
+
+### フロントエンドのディレクトリ構成
+featuresディレクトリを採用し、コンポーネントの関心事をコロケーションで配置するようなディレクトリ構成としました。  
+hooksやcomponentsなどの技術的関心によってディレクトリを分けるのではなく、ビジネスロジックによってディレクトリを分けることで、コンポーネントがどの機能に属しているかが一目でわかるようになり、メンテもしやすくなりました。  
+
+### フロントエンドのテスト
+特定の人だけが使う管理画面という特性とメンテコストを考慮して、テスト戦略を考えました。  
+以下の2つのテスト方針を採用しました。
+
+#### 1. Formの挙動のテスト
+フォーム入力値をAPIリクエストする際の内容についてのテストです。  
+複雑なフォームにおいて、一通りの操作の後で意図した内容でリクエストを送れているかテストできるようになっただけでなく、renovateによるライブラリアップデート時にも自動テストとしてCIでデグレを検知できるようになりました。
+
+#### 2. ロール別の表示有無の認可テスト
+管理画面という特性上、ユーザーごとに適切なロールが設定されています。ロールによって見えるべき表示や、逆に見えてはいけない表示があります。  
+機能追加や修正の際にロールによる表示の有無を間違えたとしても中々気づきにくいため、自動テストで担保できるようにしました。  
+テストケースを見るだけでロールごとの表示の期待値がわかるため、仕様書としても非常に有用なものとなりました。
+
+### 管理画面操作ログ
+管理画面は不特定多数の人が操作するため、運用上意図しないデータが入ってることがあります。デバッグ目的でDBのデータがどの時点でどう書き換えられたかが知りたい状況があるので、管理画面からDBに対するwrite処理をログとして記録する方法を確立しました。  
+具体的には専用のテーブルを用意し、AsyncLocalStorageとprismaのmiddleware機能を使ってwrite処理のたびに「誰が、いつ、どのテーブルのどのレコードをどのように書き換えたか」を記録するようにしました。  
+middlewareの機能として実装したので、エンドポイントが増えたり修正されても操作ログ部分は変更を加える必要がなく、メンテコストを低く抑えることができました。  
+こちらの内容はブログにまとめました。  
+https://www.sunapro.com/operation-log/
+
+</div>
+</details>
+
+#### キャッシュ機構の変更とパフォーマンスチューニング
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+
+Auroraのデータをインメモリのキャッシュに保持しているアプリケーションサーバーにおいて、それまでいわゆるリードスルーキャッシングで実装されていたインメモリのキャッシュ機構を、goroutineを使って別プロセスでインメモリを更新し続けるという方針に変更しました。
+
+これによって以下のメリットがありました。
+1. Thundering herd問題が解消
+1. リクエスト数によらずAuroraへのクエリ数が一定になる (1万RPSのサーバーで数十/sec程度のクエリ数)
+1. サーバーのレスポンス時間が安定化し、1万RPSの状況でも数十ms → 15ms程度に改善
+
+こちらの内容はブログにまとめました。  
+https://www.sunapro.com/cache-strategy-batch/
+
+#### リアーキテクトとテスト拡充
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" />|
+
+アーキテクチャのレイヤーごとの役割が不明瞭になっている箇所があり、レイヤーごとの責務とディレクトリ構成のあり方を言語化してチームで共通認識を作成しました。  
+これをもとにテストを拡充しながらリファクタリングを行い、結果として**3ヶ月程度で+-6万くらいのdiffが生じましたが、バグやデグレを0に抑えることができました。**
+
+また、CI上でflakyだったテストの原因も特定し、テストの安定化にも成功しました。
+
+<details>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
+
+### テスト戦略の設計
+テストを拡充する際、今後のメンテナンスコストを考慮してテストの書き方の共通認識を定めました。  
+具体的にはテーブル駆動テストで、テストに必要なseedデータと結果をDRYにせず愚直に書くという方法です。  
+これによって多少冗長になったとしてもinputに対してoutputが明瞭な理解しやすいテストになりました。  
+また、テストケース名も「~の場合、~になる」という形式に統一することでinputに対して期待するoutputが明瞭になり、仕様書としての役割も果たすようにしました。  
+
+### mockの使い方
+レイヤーごとにテストの方針を定めました。  
+infraレイヤーは実際にDBに接続してテストをする、serviceレイヤーはinfraレイヤーの結果をmockしてテストをするなどと定めていき、それぞれのレイヤーの責務とCIでのテスト時間のバランスを取るようにしました。
+
+### テストの並列性制御とflakyテストの解消
+当時、テストをlocalで実行すると落ち、CI上で実行すると通るという状況がありました。  
+結論、localとCI上でGOMAXPROCSのデフォルト値の違いで並列度が違っていたことが要因でした。  
+こちらの内容はブログにまとめました。  
+https://www.sunapro.com/go-test-parallel-flaky/  
+
+根本原因は共通DBに対する処理を並列で行っていたことなので、そもそもinfraレイヤーは`t.Parallel`しないようにし`-p=1`オプションを付けてテストを実行することで対応しました。
+
+</div>
+</details>
+
+
+#### AWSコスト削減
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / 運用・保守|
+|使用技術| <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+
+**使用しているリソースの見直しを行い、AWSのコストを月額で50%程度($10000以上)削減できました。**
+
+具体的に見直したサービスは以下です。
+- S3
+- DynamoDB
+- ECS
+- Aurora
+- Kinesis
+
+<details>
+<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
+<div style="background-color: #f7f7f7; padding: 24px">
+
+### S3
+Storage Lensを用いてオブジェクトの分析をしつつ、不要なオブジェクトの削除しました。  
+また、ライフサイクルの見直しを行い、オブジェクトの保持期間を最適化することでストレージコストを削減しました。  
+ライフサイクル周りで調査したことはこちらのブログにまとめました。  
+https://www.sunapro.com/s3-delete-lifecycle/
+
+### DynamoDB
+読み込みコストの削減として、キャッシュのTTLの見直しを行いました。  
+さらに、キャッシュキーの見直しを行い、キャッシュのヒット率を上げることで読み込みコストを削減しました。  
+また、書き込みコストは一部サービスでリクエストごとの書き込みをgoroutineとch,select文を用いてバッチ処理化することで削減しました。  
+こちらの内容はブログにまとめました。  
+https://www.sunapro.com/go-ch-batch/
+
+### ECS
+サービスごとのオートスケール戦略を最適化することで、リクエスト数に応じたタスク数で運用できる体制を整えました。  
+また、Compute Savings Planを適用しました。  
+
+### Aurora
+「キャッシュ機構の変更とパフォーマンスチューニング」で記述した通り、キャッシュ機構の変更によってクエリ数を削減しました。  
+その影響によりCPU使用率が大幅に削減できたので、インスタンスサイズを下げることでコスト削減しました。
+
+### Kinesis
+サービスごとのストリームのシャード数最適化を行いました。
+
+</div>
+</details>
 
 ### 株式会社TERASS (2021/05 ~ 2022/10)
 #### 開発環境の整備
@@ -73,7 +229,7 @@
 |---|---|
 |プロジェクト規模|1人|
 |役割|設計 / コーディング / 運用・保守|
-|使用技術| <img alt="GitHub Ations" src="https://img.shields.io/badge/-GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" /> <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" /> <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" /> <img alt="Renovate" src="https://img.shields.io/badge/-Renvate-1A1F6C?style=flat-square&logo=Renovatebot&logoColor=white" />|
+|使用技術| <img alt="GitHub Ations" src="https://img.shields.io/badge/-GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" /> <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" /> <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" /> <img alt="Renovate" src="https://img.shields.io/badge/-Renovate-1A1F6C?style=flat-square&logo=Renovatebot&logoColor=white" />|
 
 担当タスク以外にもやりたいことがあって認められればできるという環境だったので、いくつかの提案をして実行しました。具体的には次のことをやりました。
 

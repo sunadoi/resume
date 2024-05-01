@@ -53,7 +53,7 @@
   - 株式会社TERASS
     - 開発環境の整備
     - Firebase emulatorsによるローカル環境の構築とテストの実装
-    - 既存プロダクトの新機能開発
+    - 大型機能の新規開発
     - 検索機能の実装
   - 株式会社ストランザ
     - PHP → Goへのリプレイス
@@ -61,7 +61,6 @@
     - マイクロサービスにおける認証機構の構築
   - 副業
     - RailsからGoへのリプレイス
-    - 名簿アプリの作成
     - Three.jsを用いた3Dアニメーションの描画
 - 業務外活動
   - 技術ブログ
@@ -339,7 +338,7 @@ https://www.sunapro.com/vitest-firebase-emulators/
 </div>
 </details>
 
-#### 既存プロダクトの新機能開発
+#### 大型機能の新規開発
 
 |key|value|
 |---|---|
@@ -602,66 +601,7 @@ DBのマイグレーションはしばらくはRails側で行います。
 </div>
 </details>
 
-#### 名簿アプリの作成
-
-
-|key|value|
-|---|---|
-|プロジェクト規模|1人|
-|役割| 要件定義 / 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Serverless" src="https://img.shields.io/badge/-Serverless Framework-FD5750?style=flat-square&logo=Serverless&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
-
-所属しているオンラインコミュニティのメンバー情報を管理するためのアプリの制作を1人で行いました。  
-フロントエンド、バックエンド、インフラの設計から実装、運用まで全てやっており、現在400名以上のユーザーに使用されています。
-
-<details>
-<summary style="cursor: pointer">👉  プロジェクト詳細 (clickして展開)</summary>
-<div style="background-color: #f7f7f7; padding: 24px">
-
-### アプリの概要
-未経験からのエンジニア転職を目指しているコミュニティ生が自分の情報を記載したり、誰かの情報を見たりできる名簿アプリです。
-
-それぞれの契約情報などもマイページから見ることができます。  
-欲しい情報を探すために特定のプロフィール情報を持った人を検索できます。  
-slackに登録したメールアドレスを入力することでslackのDMで認証コードを送信し、その認証コードによってアプリとslackを連携できます。
-
-### 実装内容
-要件定義の段階からインフラやDB設計、フロントエンドとバックエンドの両方を実装しました。  
-インフラはできるだけ運用保守のコストを下げることを考え、サーバレスな構成にすることとしました。
-
-- フロントエンド: React / TypeScript
-- バックエンド: Serverless Framework / Express / TypeScript
-- インフラ: AWS Amplify / API GateWay / Lambda / RDS / DynamoDB
-
-#### フロントエンド
-フロントの状態管理はuseState, useReducer + Context APIを使用しました。  
-Reduxを使うことも考えましたが、Reduxを使うと非同期処理の実装にthunkやsagaなどのmiddlewareが必要になることや記述量が多くなることを考慮して今回はこのような構成にしました。  
-また、React本体が今後Concurrent modeの導入などで非同期処理が扱いやすくなるのではないかとの期待もあり、純正のReact hooksで完結させたかったからです。  
-Concurrent modeの導入に先立ち、React Suspenseを使用してみました。
-
-#### バックエンド
-slack連携の機能では一時的に認証コードを保持する必要があったのでLambdaとDynamo DBを使用しました。  
-認証コードは有効期限があるので、一定の期間で自動的にデータが削除されるようDynamo DBのTTL機能を利用しました。
-
-GitHub Actionsを使用したCI/CDを構築しました。  
-CIではTypeScriptのタイプチェック、prettierによるフォーマットチェック、eslintによるlintチェック、ビルドとテスト実行を行なっています。
-
-### 苦労した点
-#### フロントエンド
-1ページ内で更新すべき値の多いページの読み込みが、遅い状況が起きてしまいました。  
-計測した結果、不要な再レンダリングが起こっているためであるとわかったので、React.memoやuseCallback, useMemoを適宜使用し、Contextの粒度を適切に分割することで対応しました。  
-実装当初はTypeScriptの理解が浅く、anyを使用した箇所もあったのですが、後々TypeScriptの理解が深まった段階でリファクタリングを行い、anyを一切使用しないコードに修正しました。  
-また、tsconfigの見直しも行い、strict: trueにしたりnoImplicitAnyをtrueにしたりできるだけ堅牢な設定になるよう変更しました。
-
-#### バックエンド
-今後しばらく使用していくアプリなのでDB設計をきちんと行う必要があると考え、そのために本を4冊ほど読みました。  
-データの整合性と検索・更新のパフォーマンスを加味して、レコード数がそれほどまでには多くならないとの推測から、できるだけ整合性を優先させた設計を心がけました。
-
-</div>
-</details>
-
 #### Three.jsを用いた3Dアニメーションの描画
-
 
 |key|value|
 |---|---|

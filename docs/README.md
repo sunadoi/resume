@@ -8,7 +8,7 @@
 |生年月日|1990/07/02|
 |居住地|和歌山県|
 |最終学歴|北海道大学大学院薬学研究院|
-|blog|https://www.sunapro.com/|
+|blog|https://suna.dev/|
 
 ---
 
@@ -111,7 +111,7 @@ hooksやcomponentsなどの技術的関心によってディレクトリを分�
 具体的には専用のテーブルを用意し、AsyncLocalStorageとprismaのmiddleware機能を使ってwrite処理のたびに「誰が、いつ、どのテーブルのどのレコードをどのように書き換えたか」を記録するようにしました。  
 middlewareの機能として実装したので、エンドポイントが増えたり修正されても操作ログ部分は変更を加える必要がなく、メンテコストを低く抑えることができました。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/operation-log/
+https://suna.dev/operation-log/
 
 </div>
 </details>
@@ -132,7 +132,7 @@ Auroraのデータをインメモリのキャッシュに保持しているア�
 1. サーバーのレスポンス時間が安定化し、1万RPSの状況でも数十ms → 15ms程度に改善
 
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/cache-strategy-batch/
+https://suna.dev/cache-strategy-batch/
 
 #### リアーキテクトとテスト拡充
 
@@ -165,7 +165,7 @@ infraレイヤーは実際にDBに接続してテストをする、serviceレイ
 当時、テストをlocalで実行すると落ち、CI上で実行すると通るという状況がありました。  
 結論、localとCI上でGOMAXPROCSのデフォルト値の違いで並列度が違っていたことが要因でした。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/go-test-parallel-flaky/  
+https://suna.dev/go-test-parallel-flaky/  
 
 根本原因は共通DBに対する処理を並列で行っていたことなので、そもそもinfraレイヤーは`t.Parallel`しないようにし`-p=1`オプションを付けてテストを実行することで対応しました。
 
@@ -198,14 +198,14 @@ https://www.sunapro.com/go-test-parallel-flaky/
 Storage Lensを用いてオブジェクトの分析をしつつ、不要なオブジェクトの削除しました。  
 また、ライフサイクルの見直しを行い、オブジェクトの保持期間を最適化することでストレージコストを削減しました。  
 ライフサイクル周りで調査したことはこちらのブログにまとめました。  
-https://www.sunapro.com/s3-delete-lifecycle/
+https://suna.dev/s3-delete-lifecycle/
 
 ### DynamoDB
 読み込みコストの削減として、キャッシュのTTLの見直しを行いました。  
 さらに、キャッシュキーの見直しを行い、キャッシュのヒット率を上げることで読み込みコストを削減しました。  
 また、書き込みコストは一部サービスでリクエストごとの書き込みをgoroutineとch,select文を用いてバッチ処理化することで削減しました。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/go-ch-batch/
+https://suna.dev/go-ch-batch/
 
 ### ECS
 サービスごとのオートスケール戦略を最適化することで、リクエスト数に応じたタスク数で運用できる体制を整えました。  
@@ -248,7 +248,7 @@ https://www.sunapro.com/go-ch-batch/
 GitHub ActionsでPRにpushした際、最新のPRの内容を反映したものをデプロイするよう設定し、PRを閉じたときに削除するよう設定しました。  
 これによってPRで発行されたURLをクリックするだけでPR内容を確認できる環境ができ、開発体験が向上したと思っています。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/github-actions-firebase-preview/
+https://suna.dev/github-actions-firebase-preview/
 
 ### storybookのデプロイ環境の構築
 storybookを使用しているものの、localにしか環境が存在しなかったためlocalでわざわざ立ち上げなくても最新の内容を確認できる環境が欲しかったので用意することにしました。  
@@ -261,14 +261,14 @@ localでのサーバーの立ち上げがとても遅く毎回1分近くかか�
 これは外部ライブラリにesbuildを使った高速なバンドル、ソースコードはバンドルをしないでES Modulesをそのまま読み込むのでとても速いというものだったので、ちょうど要件にあっていると思いこちらへのリプレイスを行いました。  
 結果的に1分近くかかっていたサーバーの立ち上げが3秒程度になったので非常に快適な開発環境が整ったと思っています。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/webpack-to-vite/
+https://suna.dev/webpack-to-vite/
 
 ### Renovateの導入
 プロジェクトで使用しているライブラリでバージョンの古いものがいくつかあり、機能開発する上でそれが原因でバグが生じることが何度かありました。こういった背景からライブラリの定期的なアップデートをしたいということになり、どういった技術があるのか調査しました。  
 DependabotやRenovateなどが代表的なツールであり、これらは定期的にライブラリのアップデートを監視してくれてPRを作成してくれますが、設定の細かさやPRの情報のリッチさなどからRenovateを採用することにしました。  
 これによりライブラリが新しい状態を保つことができるようになっただけでなく、ライブラリの変更をきちんと追いかけるようになったのは良い副産物でした。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/renovate/  
+https://suna.dev/renovate/  
 運用方法の決め方や実際に半年間運用した振り返りをzennにまとめました。  
 https://zenn.dev/sunadoi/articles/889219ab865583  
 また、ライブラリのアップデートによってテストが落ちたことがあり、ライブラリ側のデグレーションらしき挙動だったのでissueを立てて修正してもらいました。  
@@ -333,7 +333,7 @@ emulatorsのfirestoreやauthデータはファイルに永続化するように�
 数十のテストを書きましたが全く問題なく書けており、vitestのおかげか当初心配していた実行時間の長期化も全く気になっていません。
 
 実装の詳細はブログに記述しました。  
-https://www.sunapro.com/vitest-firebase-emulators/
+https://suna.dev/vitest-firebase-emulators/
 
 </div>
 </details>
@@ -368,7 +368,7 @@ Firestoreでちゃんと設計するのは初めてでしたが、本を何冊�
 React, TypeScriptを使った開発をしていますが、型安全性はかなり気を使っています。anyは一切使わず、型アサーションも極力使わないようにしています。  
 その時の開発で問題なかったとしても、後々の改修などで意図しないコードになる可能性があることも考慮して、そういった場合に検知できるような型を定義することも心がけています。  
 その一例をブログにまとめました。  
-https://www.sunapro.com/tuple-type-check/
+https://suna.dev/tuple-type-check/
 
 ### 実装順序
 数ある機能の中で、どの順番でタスクに取り掛かっていくべきかなども全て自分で決めました。  
@@ -410,7 +410,7 @@ https://www.sunapro.com/tuple-type-check/
 algoliaが提供しているコンポーネントライブラリを使用したのですが、検索する項目名がstringになっていたのでタイポしても気づけないという課題がありました。  
 型安全性をもう少し高めた上で実装したいなと思い、template literal typesを使用して型安全性を高めました。  
 こちらの内容はブログにまとめました。  
-https://www.sunapro.com/library-template-literal-types/
+https://suna.dev/library-template-literal-types/
 
 ### ライブラリ提供コンポーネントの機能不足
 ライブラリで提供されている検索機能はコンポーネントに結びついているものであるため、ロジック部分だけを再利用するということができないものでした。ロジックのみを再利用したい場合は、display: noneを適用した親コンポーネントでラップして対応しました。  
@@ -420,7 +420,7 @@ https://www.sunapro.com/library-template-literal-types/
 保存したお気に入り検索条件に該当するユーザーが登録された時に通知する機能では、ユーザーの条件と保存されている検索条件を比較する必要がありました。  
 条件の中には「xxまで1週間以内」などの時間に関するものがあり、検索時にはタイムスタンプを使用していますが、タイムスタンプを保存すると時間と共に条件が適用しなくなってしまうという課題がありました。したがって、保存する検索条件としては"1週間以内"などのstringとし、通知時にタイムスタンプへ変換してどの検索条件がその時点でのユーザーの情報と適合するかを突合するようにして対応しました。  
 この時、通知のタイミングでタイムスタンプに変換する処理で一部バグを生み出してしまったので、その原因と修正方法をブログにまとめました。  
-https://www.sunapro.com/object-init/
+https://suna.dev/object-init/
 
 
 </div>
@@ -636,7 +636,7 @@ huskyとCIでは型、format、lintのチェックを行い、CIではそれに�
 ### 技術ブログ
 日々の業務で詰まったことや、気になったトピックを深掘りしてまとめたりしています。
 
-https://www.sunapro.com/
+https://suna.dev/
 
 ### OSS貢献
 

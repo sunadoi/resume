@@ -132,7 +132,7 @@ Auroraのデータをインメモリのキャッシュに保持しているア�
 1. サーバーのレスポンス時間が安定化し、1万RPSの状況でも数十ms → 15ms程度に改善
 
 こちらの内容はブログにまとめました。  
-https://suna.dev/articles/articles/cache-strategy-batch
+https://suna.dev/articles/cache-strategy-batch
 
 #### リアーキテクトとテスト拡充
 

@@ -694,6 +694,7 @@ https://suna.dev/articles/
 - https://github.com/faker-js/faker/pull/1405
 - https://github.com/faker-js/faker/pull/1419
 - https://github.com/mantinedev/mantine/pull/5032
+- https://github.com/goccy/go-json/pull/531
 
 ---
 

@@ -14,32 +14,25 @@
 
 ## 技術スタック
 
-### 言語
-<p>
-  <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" />
-  <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white" />
-  <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" />
-</p>
+### フロントエンド
 
-### フレームワーク・その他
-<p>
-  <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
-  <img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=Next.js&logoColor=white" />
-  <img alt="NestJS" src="https://img.shields.io/badge/-NestJS-E0234E?style=flat-square&logo=NestJS&logoColor=white" />
-  <img alt="Turborepo" src="https://img.shields.io/badge/-Turborepo-EF4444?style=flat-square&logo=Turborepo&logoColor=white" />
-  <img alt="Redux" src="https://img.shields.io/badge/-Redux-45b8d8?style=flat-square&logo=redux&logoColor=white" />
-  <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" />
-  <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" />
-  <img alt="Apollo" src="https://img.shields.io/badge/-Apollo-311C87?style=flat-square&logo=apollo-graphql&logoColor=white" />
-  <img alt="GraphQL" src="https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white" />
-  <img alt="MySQL" src="https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white" />
-  <img alt="Docker" src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white" />
-  <img alt="GitHub Ations" src="https://img.shields.io/badge/-GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white" />
-  <img alt="Serverless" src="https://img.shields.io/badge/-Serverless Framework-FD5750?style=flat-square&logo=Serverless&logoColor=white" />
-  <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" />
-  <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />
-  <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" />
-</p>
+TypeScript / JavaScript / React / Next.js / Turborepo / Storybook
+
+### バックエンド
+
+Go / TypeScript / NestJS / Echo / Prisma / Docker
+
+### データエンジニアリング
+
+Snowflake / dbt
+
+### インフラ
+
+AWS / Firebase / Terraform
+
+### その他
+
+MySQL / GitHub Actions / Datadog
 
 ---
 
@@ -48,6 +41,8 @@
   - 株式会社Cyber Agent
     - 管理画面の実装 (フロントエンド、バックエンド)
     - キャッシュ機構の変更とパフォーマンスチューニング
+    - サーバーのパフォーマンスチューニング
+    - Goのchを使ってリクエストごとのDB書き込み処理をバッチ処理にする
     - リアーキテクトとテスト拡充
     - AWSコスト削減
   - 株式会社TERASS
@@ -76,7 +71,7 @@
 |---|---|
 |プロジェクト規模|2人|
 |役割|設計 / コーディング / 運用・保守|
-|使用技術| <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=Next.js&logoColor=white" /> <img alt="NestJS" src="https://img.shields.io/badge/-NestJS-E0234E?style=flat-square&logo=NestJS&logoColor=white" /> <img alt="Turborepo" src="https://img.shields.io/badge/-Turborepo-EF4444?style=flat-square&logo=Turborepo&logoColor=white" /> <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| React / Next.js / NestJS / Turborepo / Terraform / AWS / GitHub Actions|
 
 **40ページ程度ある管理画面の実装のほとんどを任せていただき、2ヶ月でフロントエンドおよびバックエンドの実装が完了しました。**
 
@@ -122,17 +117,57 @@ https://suna.dev/articles/operation-log/
 |---|---|
 |プロジェクト規模|1人|
 |役割|設計 / コーディング / 運用・保守|
-|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| Go / AWS |
 
 Auroraのデータをインメモリのキャッシュに保持しているアプリケーションサーバーにおいて、それまでいわゆるリードスルーキャッシングで実装されていたインメモリのキャッシュ機構を、goroutineを使って別プロセスでインメモリを更新し続けるという方針に変更しました。
 
 これによって以下のメリットがありました。
 1. Thundering herd問題が解消
-1. リクエスト数によらずAuroraへのクエリ数が一定になる (1万RPSのサーバーで数十/sec程度のクエリ数)
-1. サーバーのレスポンス時間が安定化し、1万RPSの状況でも数十ms → 15ms程度に改善
+1. リクエスト数によらずAuroraへのクエリ数が一定になる (2万QPSのサーバーで数十/sec程度のクエリ数)
+1. サーバーのレスポンス時間が安定化し、2万QPSの状況でも数十ms → 15ms程度に改善
 
 こちらの内容はブログにまとめました。  
 https://suna.dev/articles/cache-strategy-batch
+
+#### サーバーのパフォーマンスチューニング
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| Go / AWS |
+
+2~3万QPS程度のサーバーで非機能要件として50ms以内にレスポンスを返す必要がありました。
+
+運用しているなかでサーバーのレスポンスが悪化することがたびたびあり、以下のような対応を行ってサーバーの安定稼働に貢献しました
+
+1. ECSのオートスケールの設定
+- 基本はtracking scaleでCPU使用率を元にマネージドでオートスケールさせつつ、リクエストのスパイク時はstep scalingで一気に増やすように設定しました。
+2. ヒープ使用量の削減
+  - Datadogのメトリクスでヒープ使用量が高くなっていてGCの頻度や負荷が増加していたので、該当箇所をprofilerやtracerを使って調査
+  - リクエストのbodyのサイズが大きい場合にヒープにエスケープされていそうなことがわかった
+  - リクエストを全てbyteで変換してメモリに乗せたうえでプログラムで扱う構造体に変換していたため、この処理をストリームを使って処理することでメモリ効率を改善することでヒープ使用量が抑えられて、GCの負荷も抑えられた。
+3. Goのスタックトレース処理の削除
+  - エラーハンドリング時にスタックトレースを乗せるように処理していたが、この処理自体がパフォーマンス悪化に寄与していそうだったため削除することでパフォーマンスが安定化した
+
+
+#### Goのchを使ってリクエストごとのDB書き込み処理をバッチ処理にする
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| Go |
+
+リクエストごとにDynamoDBに加算処理している処理があり、goroutineとchを使ってバッチ処理するように書き換えました。
+
+これによって以下のメリットがありました。
+1. サーバーのレスポンス時間が高速化
+1. リクエスト数によらずDynamoDBへのクエリ数が一定になるため、将来的にリクエスト数が増えてもコストが線形的に増加しないようになった
+
+こちらの内容はブログにまとめました。
+https://suna.dev/articles/go-ch-batch
+
 
 #### リアーキテクトとテスト拡充
 
@@ -140,7 +175,7 @@ https://suna.dev/articles/cache-strategy-batch
 |---|---|
 |プロジェクト規模|1人|
 |役割|設計 / コーディング / 運用・保守|
-|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" />|
+|使用技術| Go |
 
 アーキテクチャのレイヤーごとの役割が不明瞭になっている箇所があり、レイヤーごとの責務とディレクトリ構成のあり方を言語化してチームで共通認識を作成しました。  
 これをもとにテストを拡充しながらリファクタリングを行い、結果として**3ヶ月程度で+-6万くらいのdiffが生じましたが、バグやデグレを0に抑えることができました。**
@@ -179,7 +214,7 @@ https://suna.dev/articles/go-test-parallel-flaky/
 |---|---|
 |プロジェクト規模|1人|
 |役割|設計 / 運用・保守|
-|使用技術| <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| AWS|
 
 **使用しているリソースの見直しを行い、AWSのコストを月額で50%程度($10000以上)削減できました。**
 
@@ -221,6 +256,21 @@ https://suna.dev/articles/go-ch-batch/
 </div>
 </details>
 
+#### AIエージェントを使用したクリエイティブ画像の自動審査
+
+|key|value|
+|---|---|
+|プロジェクト規模|1人|
+|役割|設計 / コーディング / 運用・保守|
+|使用技術| TypeScript / Mastra |
+
+広告に使用するクリエイティブ画像の訴求内容が、対応するLPページに含まれているかを人によってチェックしていました。
+
+これをAIエージェントを使用して自動化することで、人のチェックよりも早く、かつ正確にチェックを行うことができるようになりました。
+
+mastraを使用してworkflowを構築し、Jina Reader APIを使用してLPページの内容を取得し、クリエイティブ画像の訴求内容が含まれているかをチェックするようにしました。
+しかし、LPページには画像も含まれていてこれだけでは精度良くチェックできなかったため、別途Playwrightを使用してLPページのスクリーンショットを取得し比較することで精度を担保しました。
+
 ### 株式会社TERASS (2021/05 ~ 2022/10)
 #### 開発環境の整備
 
@@ -228,7 +278,7 @@ https://suna.dev/articles/go-ch-batch/
 |---|---|
 |プロジェクト規模|1人|
 |役割|設計 / コーディング / 運用・保守|
-|使用技術| <img alt="GitHub Ations" src="https://img.shields.io/badge/-GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" /> <img alt="Storybook" src="https://img.shields.io/badge/-Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white" /> <img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=Vite&logoColor=white" /> <img alt="Renovate" src="https://img.shields.io/badge/-Renovate-1A1F6C?style=flat-square&logo=Renovatebot&logoColor=white" />|
+|使用技術| GitHub Actions / Firebase / Storybook / Vite / Renovate |
 
 担当タスク以外にもやりたいことがあって認められればできるという環境だったので、いくつかの提案をして実行しました。具体的には次のことをやりました。
 
@@ -287,7 +337,7 @@ firestoreのrulesをテストする際にjestを使用していたのですが�
 |---|---|
 |プロジェクト規模|1人|
 |役割|要件定義 / 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Vitest" src="https://img.shields.io/badge/-Vitest-739B1B?style=flat-square&logo=Vitest&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" />|
+|使用技術| TypeScript / React / Vitest / Firebase |
 
 当時、プロジェクトにローカル環境が整備されておらず、ローカルで動作確認をするためにもstaging環境のFirebaseに接続しなければならないという状況でした。
 
@@ -344,7 +394,7 @@ https://suna.dev/articles/vitest-firebase-emulators/
 |---|---|
 |プロジェクト規模|1人|
 |役割|要件定義 / 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" />|
+|使用技術| TypeScript / React / Firebase |
 
 **5ヶ月かかる大型の新規機能開発の実装を一人で任せていただき、4ヶ月でほぼ実装が完了しました。**
 
@@ -393,7 +443,7 @@ https://suna.dev/articles/tuple-type-check/
 |---|---|
 |プロジェクト規模|1人|
 |役割|要件定義 / 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white" /> <img alt="algolia" src="https://img.shields.io/badge/-Algolia-5468FF?style=flat-square&logo=Algolia&logoColor=white" />|
+|使用技術| TypeScript / React / Firebase / Algolia |
 
 検索機能に関連する以下の機能をalgoliaを使って実装しました。
 - ユーザーの検索機能の実装
@@ -433,7 +483,7 @@ https://suna.dev/articles/object-init/
 |---|---|
 |プロジェクト規模|3人|
 |役割| 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" /> <img alt="MySQL" src="https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white" /> <img alt="Docker" src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| Go / MySQL / Docker / AWS |
 
 PHPで動いている既存のアプリのバックエンドをGoのAPIとして切り出すリプレイスを行いました。
 Goではクリーンアーキテクチャを意識して実装をしていました。
@@ -472,7 +522,7 @@ truthyとfalsyの判定の違いなどに気をつけつつ、どういうレス
 |---|---|
 |プロジェクト規模|2人|
 |役割| コーディング / テスト
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Apollo" src="https://img.shields.io/badge/-Apollo%20GraphQL-311C87?style=flat-square&logo=apollo-graphql&logoColor=white" /> <img alt="GraphQL" src="https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| TypeScript / React / GraphQL / AWS |
 
 Reactで検索画面の機能追加を行いました。
 
@@ -500,7 +550,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 |---|---|
 |プロジェクト規模|3人|
 |役割| 設計 / コーディング / テスト
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Serverless" src="https://img.shields.io/badge/-Serverless Framework-FD5750?style=flat-square&logo=Serverless&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| TypeScript / React / Serverless Framework / AWS |
 
 マイクロサービス化している複数の自社サービスの認証、認可を一元的に管理するための認証アプリを実装しました。  
 複数サービス間でログイン状態を共有するためにはどうすればいいかなどを考慮しつつも、セキュアな構成にするため、設計の段階から議論を重ねてアーキテクチャを設計しました。
@@ -548,7 +598,7 @@ tsconfigの設定を見直したり、eslintやCIの設定も見直したこと�
 |---|---|
 |プロジェクト規模|1人|
 |役割| 要件定義 / 設計 / コーディング / テスト / 保守・運用
-|使用技術| <img alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=Go&logoColor=white" /> <img alt="Ruby on Rails" src="https://img.shields.io/badge/-Rails-CC0000?style=flat-square&logo=Ruby on Rails&logoColor=white" /> <img alt="Terraform" src="https://img.shields.io/badge/-Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white" /> <img alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white" />|
+|使用技術| Go / Ruby on Rails / Terraform / AWS |
 
 APIモードで動いているRailsアプリケーションの一部をGoにリプレイスするプロジェクトを担当しています。  
 Goのコードが何も書かれていない状態から、移行の方針や使用する技術を選定しました。  
@@ -607,7 +657,7 @@ DBのマイグレーションはしばらくはRails側で行います。
 |---|---|
 |プロジェクト規模|3人|
 |役割| コーディング
-|使用技術| <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" /> <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" /> <img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=Next.js&logoColor=white" /> <img alt="Three.js" src="https://img.shields.io/badge/-Three.js-000000?style=flat-square&logo=Three.js&logoColor=white" /> |
+|使用技術| TypeScript / React / Next.js / Three.js |
 
 物流倉庫の中の荷物の動きを可視化するアプリケーションを実装しました。  
 three.jsを使用した3Dアニメーションの描画機能の実装を担当した他、開発環境の整備として各種設定やCIの構築なども行いました。

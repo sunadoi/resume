@@ -86,6 +86,7 @@ MySQL / GitHub Actions / Datadog
 
 MCP設定時にブラウザでログインして認証を完了し、AIエージェントから管理画面の操作をできるようになりました。
 詳細は以下のブログに記載してあります。
+
 https://suna.dev/articles/remote-mcp-server-with-auth
 
 #### キャッシュ機構の変更とパフォーマンスチューニング
